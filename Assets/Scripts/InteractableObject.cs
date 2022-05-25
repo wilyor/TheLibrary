@@ -10,6 +10,7 @@ public abstract class InteractableObject : MonoBehaviour
     protected Animator anim;
     public string interactText;
     public GameObject UIInteractionText;
+    public GameObject interactionCanvas;
 
     public abstract void Initialize();
     public abstract void Interact();
@@ -41,4 +42,6 @@ public abstract class InteractableObject : MonoBehaviour
             UIInteractionText.SetActive(false);
         }
     }
+
+    public abstract void CloseInteraction();
 }

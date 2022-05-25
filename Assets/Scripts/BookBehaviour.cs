@@ -35,10 +35,19 @@ public class BookBehaviour : InteractableObject
 
     public override void Interact()
     {
-        isActivated = !isActivated;
+        isActivated = true;
         anim.SetBool("Open", isActivated);
         Highlight(false);
         CameraSwitcher.SwitchCamera(bookCamera);
+        interactionCanvas?.SetActive(true);
+    }
+
+    public override void CloseInteraction()
+    {
+        isActivated = false;
+        anim.SetBool("Open", isActivated);
+        Highlight(false);
+        interactionCanvas?.SetActive(false);
     }
 
     public void ShowBoard()

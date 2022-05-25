@@ -60,14 +60,6 @@ public class MouseLook : MonoBehaviour
                 ActivateObject();
             }
         }
-        else
-        {
-            if (Input.GetMouseButtonDown(1))
-            {
-                TooglePlayerMovement(true);
-                DeactivateObject();
-            }
-        }
     }
 
     void checkray()
@@ -101,7 +93,6 @@ public class MouseLook : MonoBehaviour
         if(currentObject)
         {
             TooglePlayerMovement(true);
-            currentObject.GetComponent<InteractableObject>().Interact();
             CameraSwitcher.SwitchCamera(playercamera);
         }
     }

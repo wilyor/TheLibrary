@@ -18,19 +18,12 @@ public class SecondFloorManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.T) && !moving)
-        {
-            RotateBody(-45);
-        }
-        else if (Input.GetKey(KeyCode.Y) && !moving)
-        {
-            RotateBody(45);
-        }
         transform.rotation = Quaternion.Slerp(transform.rotation, currentAngle, speedToMove);
     }
 
     public void RotateBody(float movementAngle)
     {
+        if (moving) return;
         currentYRotation += movementAngle;
         currentAngle = Quaternion.Euler(0, currentYRotation, 0);
         StartCoroutine(MovingDelay());

@@ -27,8 +27,15 @@ public class GlobeManager : InteractableObject
 
     public override void Interact()
     {
-        isActivated = !isActivated;
+        isActivated = true;
         Highlight(false);
         CameraSwitcher.SwitchCamera(roofCamera);
+        interactionCanvas?.SetActive(true);
+    }
+
+    public override void CloseInteraction()
+    {
+        interactionCanvas?.SetActive(false);
+        isActivated = false;
     }
 }

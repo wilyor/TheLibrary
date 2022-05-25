@@ -12,19 +12,16 @@ public class MouseLook : MonoBehaviour
     public GameObject currentObject;
     bool isActive = true;
     [SerializeField] CinemachineVirtualCamera playercamera;
-    [SerializeField] CinemachineVirtualCamera bookCamera;
 
     private void OnEnable()
     {
         CameraSwitcher.Register(playercamera);
-        CameraSwitcher.Register(bookCamera);
         CameraSwitcher.SwitchCamera(playercamera);
     }
 
     private void OnDisable()
     {
         CameraSwitcher.Unregister(playercamera);
-        CameraSwitcher.Unregister(bookCamera);
     }
 
     void Start()
@@ -52,7 +49,6 @@ public class MouseLook : MonoBehaviour
             playercamera.transform.localRotation = Quaternion.Euler(xrotation, 0f, 0f);
             playerBody.Rotate(Vector3.up * mouseX);
         }
-        
     }
 
     public void Interact()
@@ -83,24 +79,29 @@ public class MouseLook : MonoBehaviour
             if (Physics.Raycast(RayOrigin, out HitInfo, 100.0f) )
             {
                 var selectedObject = HitInfo.transform;
-                if (selectedObject.name == "Book" && Vector3.Distance(transform.position, selectedObject.position) < 3.5f)
+                if (selectedObject.tag == "Interactable" && Vector3.Distance(transform.position, selectedObject.position) < 4.5f)
                 {
                     currentObject = HitInfo.transform.gameObject;
-                    currentObject.GetComponent<BookBehaviour>().isOnView = true;
+                    currentObject.GetComponent<InteractableObject>().isOnView = true;
                 }
                 else
                 {
-                    if (currentObject) currentObject.GetComponent<BookBehaviour>().isOnView = false;
+                    if (currentObject)
+                    {
+                        currentObject.GetComponent<InteractableObject>().isOnView = false;
+                        currentObject.GetComponent<InteractableObject>().Highlight(false);
+                    }
                     currentObject = null;
                 }
             }
         }
     }
-    void DeactivateObject()
+    public void DeactivateObject()
     {
         if(currentObject)
         {
-            currentObject.GetComponent<BookBehaviour>().OpenBook();
+            TooglePlayerMovement(true);
+            currentObject.GetComponent<InteractableObject>().Interact();
             CameraSwitcher.SwitchCamera(playercamera);
         }
     }
@@ -109,9 +110,8 @@ public class MouseLook : MonoBehaviour
     {
         if (currentObject)
         {
-            currentObject.GetComponent<BookBehaviour>().OpenBook();
+            currentObject.GetComponent<InteractableObject>().Interact();
             TooglePlayerMovement(false);
-            CameraSwitcher.SwitchCamera(bookCamera);
         }
     }
 

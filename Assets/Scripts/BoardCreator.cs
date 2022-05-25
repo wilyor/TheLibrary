@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BoardCreator : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class BoardCreator : MonoBehaviour
     float currentSize;
     public int[,] boardMatrix;
     public List<Tile> goodTiles;
+    [SerializeField] UnityEvent onCompleteEvent;
 
     void Start()
     {
@@ -124,7 +126,7 @@ public class BoardCreator : MonoBehaviour
             currentGoodIndex += 1;
             if (currentGoodtiles >= goodTilesTotal)
             {
-                Debug.Log("OMG you did it!!!");
+                onCompleteEvent?.Invoke();
             }
         }
         else
@@ -132,7 +134,6 @@ public class BoardCreator : MonoBehaviour
             ResetBoard(tile);
         }
     }
-
 }
 
 public class Board

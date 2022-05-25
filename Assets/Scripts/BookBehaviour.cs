@@ -1,39 +1,44 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BookBehaviour : MonoBehaviour
+public class BookBehaviour : InteractableObject
 {
-    public bool isOpen;
-    public bool isOnView = false;
-    public GameObject outlineBook;
     public GameObject gameBoard;
-    Animator anim;    
+    [SerializeField] CinemachineVirtualCamera bookCamera;
 
+    private void OnEnable()
+    {
+        CameraSwitcher.Register(bookCamera);
+    }
+
+    private void OnDisable()
+    {
+        CameraSwitcher.Unregister(bookCamera);
+    }
     void Start()
+    {
+        Initialize();
+    }
+
+    private void Update()
+    {
+        if (isOnView && !isActivated) Highlight(true);
+    }
+
+    public override void Initialize()
     {
         anim = GetComponent<Animator>();
         gameBoard.SetActive(false);
     }
 
-    private void Update()
+    public override void Interact()
     {
-        if (isOnView && !isOpen) Highlight(true);
-        else
-        {
-            Highlight(false);
-        }
-    }
-    public void OpenBook()
-    {
-        isOpen = !isOpen;
-        anim.SetBool("Open", isOpen);
+        isActivated = !isActivated;
+        anim.SetBool("Open", isActivated);
         Highlight(false);
-    }
-
-    public void Highlight(bool active)
-    {
-         outlineBook.SetActive(active);
+        CameraSwitcher.SwitchCamera(bookCamera);
     }
 
     public void ShowBoard()

@@ -10,6 +10,9 @@ public class Tile : MonoBehaviour
     public bool activated = false;
     public Tile nextSibling;
     public Tile prevSibling;
+    public Texture mainTexture;
+    public Texture markTexture;
+
 
     public event Action<Tile> OnWrongSelected;
     public event Action<Tile> OnGoodSelected;
@@ -21,7 +24,7 @@ public class Tile : MonoBehaviour
 
     public void CoverTile()
     {
-        ChangeTileMaterial(Color.gray);
+        ChangeTileMaterial(mainTexture);
         activated = false;
     }
 
@@ -30,22 +33,22 @@ public class Tile : MonoBehaviour
         switch (status)
         {
             case Status.inactive:
-                ChangeTileMaterial(Color.white);
+                ChangeTileMaterial(mainTexture);
                 break;
             case Status.activeGood:
-                ChangeTileMaterial(Color.green);
+                ChangeTileMaterial(markTexture);
                 OnGoodSelected?.Invoke(this);
                 break;
             case Status.activeBad:
-                ChangeTileMaterial(Color.red);
+                ChangeTileMaterial(mainTexture);
                 OnWrongSelected?.Invoke(this);
                 break;
         }
     }
 
-    void ChangeTileMaterial(Color color)
+    void ChangeTileMaterial(Texture texture)
     {
-        tileMat.material.color = color;
+        tileMat.material.mainTexture = texture;
     }
 
     private void OnMouseDown()

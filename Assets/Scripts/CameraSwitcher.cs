@@ -15,7 +15,6 @@ public static class CameraSwitcher
 
     public static void SwitchCamera(CinemachineVirtualCamera camera)
     {
-        Debug.Log(camera.name);
         camera.Priority = 10;
         activeCamera = camera;
         

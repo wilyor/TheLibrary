@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SecondFloorManager : MonoBehaviour
@@ -34,5 +33,10 @@ public class SecondFloorManager : MonoBehaviour
         moving = true;
         yield return new WaitForSeconds(timeToMove);
         moving = false;
+    }
+
+    public float GetCurrentRotation()
+    {
+        return currentYRotation;
     }
 }

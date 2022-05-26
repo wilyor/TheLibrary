@@ -1,11 +1,13 @@
 using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GlobeManager : InteractableObject
 {
     [SerializeField] CinemachineVirtualCamera roofCamera;
+    public GameObject secondFloorLibrary;
+    [SerializeField] float keyRotation;
+    [SerializeField] UnityEvent onCompleteEvent;
 
     private void OnEnable()
     {
@@ -37,5 +39,11 @@ public class GlobeManager : InteractableObject
     {
         interactionCanvas?.SetActive(false);
         isActivated = false;
+        float currentRot = secondFloorLibrary.GetComponent<SecondFloorManager>().GetCurrentRotation();
+        if (currentRot == keyRotation)
+        {
+            onCompleteEvent?.Invoke();
+            Debug.Log("Completed");
+        }
     }
 }

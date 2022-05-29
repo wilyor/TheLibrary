@@ -9,15 +9,27 @@ public class SecondFloorManager : MonoBehaviour
     float currentYRotation = 90;
     public float timeToMove = 1;
     public float speedToMove = 0.05f;
+    public GameObject[] BookCases;
+    int[] password;
 
     void Start()
     {
         transform.rotation = Quaternion.Euler(0, 90f, 0);
+        password = new int[BookCases.Length];
     }
 
     void Update()
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, currentAngle, speedToMove);
+    }
+
+    public void ActivateBookCase(int index)
+    {
+        BookCases[index]?.GetComponent<SingleBookCaseManager>().AddValue();
+        for (int i = 0; i < password.Length; i++)
+        {
+            password[i] = BookCases[index].GetComponent<SingleBookCaseManager>().value;
+        }
     }
 
     public void RotateBody(float movementAngle)

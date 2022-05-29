@@ -8,6 +8,7 @@ public class GlobeManager : InteractableObject
     public GameObject secondFloorLibrary;
     [SerializeField] float keyRotation;
     [SerializeField] UnityEvent onCompleteEvent;
+    public int[] password;
 
     private void OnEnable()
     {
@@ -22,11 +23,6 @@ public class GlobeManager : InteractableObject
     {
         if (isOnView && !isActivated) Highlight(true);
     }
-    public override void Initialize()
-    {
-        
-    }
-
     public override void Interact()
     {
         isActivated = true;
@@ -39,11 +35,19 @@ public class GlobeManager : InteractableObject
     {
         interactionCanvas?.SetActive(false);
         isActivated = false;
-        float currentRot = secondFloorLibrary.GetComponent<SecondFloorManager>().GetCurrentRotation();
-        if (currentRot == keyRotation)
+        bool completed = true;
+        int [] currentPassword = secondFloorLibrary.GetComponent<SecondFloorManager>().password;
+        for (int i = 0; i < currentPassword.Length; i++)
+        {
+            if (currentPassword[i] != password[i])
+            {
+                completed = false;
+                break;
+            }
+        }
+        if (completed)
         {
             onCompleteEvent?.Invoke();
-            Debug.Log("Completed");
         }
     }
 }

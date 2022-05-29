@@ -27,7 +27,7 @@ public class BookBehaviour : InteractableObject
         if (isOnView && !isActivated) Highlight(true);
     }
 
-    public override void Initialize()
+    public void Initialize()
     {
         anim = GetComponent<Animator>();
         gameBoard.SetActive(false);

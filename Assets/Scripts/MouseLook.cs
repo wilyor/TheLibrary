@@ -11,6 +11,7 @@ public class MouseLook : MonoBehaviour
     float xrotation = 0;
     public GameObject currentObject;
     bool isActive = true;
+    public bool gotKey = false;
     [SerializeField] CinemachineVirtualCamera playercamera;
 
     private void OnEnable()
@@ -75,6 +76,7 @@ public class MouseLook : MonoBehaviour
                 {
                     currentObject = HitInfo.transform.gameObject;
                     currentObject.GetComponent<InteractableObject>().isOnView = true;
+                    if (!currentObject.GetComponent<InteractableObject>().isActivated) currentObject.GetComponent<InteractableObject>().Highlight(true);
                 }
                 else
                 {
@@ -88,6 +90,7 @@ public class MouseLook : MonoBehaviour
             }
         }
     }
+
     public void DeactivateObject()
     {
         if(currentObject)
@@ -102,8 +105,9 @@ public class MouseLook : MonoBehaviour
         if (currentObject)
         {
             currentObject.GetComponent<InteractableObject>().Interact();
-            TooglePlayerMovement(false);
+            if (currentObject.name != "Key" && currentObject.name != "door") TooglePlayerMovement(false);   
         }
+        
     }
 
     void TooglePlayerMovement(bool movement)

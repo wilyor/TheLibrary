@@ -10,12 +10,16 @@ public class SecondFloorManager : MonoBehaviour
     public float timeToMove = 1;
     public float speedToMove = 0.05f;
     public GameObject[] BookCases;
-    int[] password;
+    public int[] password;
 
     void Start()
     {
         transform.rotation = Quaternion.Euler(0, 90f, 0);
         password = new int[BookCases.Length];
+        for(int i = 0; i < password.Length; i++)
+        {
+            password[i] = 3;
+        }
     }
 
     void Update()
@@ -26,10 +30,7 @@ public class SecondFloorManager : MonoBehaviour
     public void ActivateBookCase(int index)
     {
         BookCases[index]?.GetComponent<SingleBookCaseManager>().AddValue();
-        for (int i = 0; i < password.Length; i++)
-        {
-            password[i] = BookCases[index].GetComponent<SingleBookCaseManager>().value;
-        }
+        password[index] = BookCases[index].GetComponent<SingleBookCaseManager>().value;
     }
 
     public void RotateBody(float movementAngle)

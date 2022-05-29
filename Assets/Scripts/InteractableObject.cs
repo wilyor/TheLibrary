@@ -12,7 +12,6 @@ public abstract class InteractableObject : MonoBehaviour
     public GameObject UIInteractionText;
     public GameObject interactionCanvas;
 
-    public abstract void Initialize();
     public abstract void Interact();
     public void Highlight(bool status)
     {

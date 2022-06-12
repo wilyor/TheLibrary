@@ -19,12 +19,12 @@ public class BoardManager : MonoBehaviour
     void Start()
     {
         guide.SetActive(false);
-        board = new Board(new int[,] { { 1, 0, 0, 0}, { 1, 1, 1, 0}, { 0, 0, 1, 0 }, { 0, 0, 1, 1} });
+        board = new Board(new int[,] { { 1, 0, 0, 0, 0}, { 1, 1, 1, 1, 0}, { 0, 0, 0, 1, 0 }, { 0, 0, 0, 1, 1}, { 0, 0, 0, 0, 1 } });
         currentSize = transform.lossyScale.x;
         transform.localScale = new Vector3(currentSize/board.width, currentSize/board.height, 1);
         goodTiles = new List<Tile>();
         PopulateBoard();
-        FindPath(0,0,3,3);
+        FindPath(0,0,4,4);
     }
 
     public void PopulateBoard()

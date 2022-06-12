@@ -1,4 +1,5 @@
 using Cinemachine;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,7 +8,9 @@ public class GlobeManager : InteractableObject
     [SerializeField] CinemachineVirtualCamera roofCamera;
     public GameObject secondFloorLibrary;
     [SerializeField] float keyRotation;
+    [SerializeField] GameObject orb;
     [SerializeField] UnityEvent onCompleteEvent;
+    public ParticleSystem globeParticles;
     public int[] password;
 
     private void OnEnable()
@@ -48,6 +51,20 @@ public class GlobeManager : InteractableObject
         if (completed)
         {
             onCompleteEvent?.Invoke();
+            DissapearGlobe();
         }
+    }
+
+    void DissapearGlobe()
+    {
+        StartCoroutine(StartParticles());
+    }
+
+    IEnumerator StartParticles()
+    {
+        yield return new WaitForSeconds(1f);
+        orb?.SetActive(false);
+        GetComponent<BoxCollider>().enabled = false;
+        globeParticles.Play();
     }
 }

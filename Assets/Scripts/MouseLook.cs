@@ -12,6 +12,7 @@ public class MouseLook : MonoBehaviour
     public GameObject currentObject;
     bool isActive = true;
     public bool gotKey = false;
+    public float distanceTointeract = 4.5f;
     [SerializeField] CinemachineVirtualCamera playercamera;
 
     private void OnEnable()
@@ -72,7 +73,7 @@ public class MouseLook : MonoBehaviour
             if (Physics.Raycast(RayOrigin, out HitInfo, 100.0f) )
             {
                 var selectedObject = HitInfo.transform;
-                if (selectedObject.tag == "Interactable" && Vector3.Distance(transform.position, selectedObject.position) < 4.5f)
+                if (selectedObject.tag == "Interactable" && Vector3.Distance(transform.position, selectedObject.position) < distanceTointeract)
                 {
                     currentObject = HitInfo.transform.gameObject;
                     currentObject.GetComponent<InteractableObject>().isOnView = true;

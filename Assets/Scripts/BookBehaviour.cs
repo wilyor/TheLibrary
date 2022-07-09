@@ -30,7 +30,10 @@ public class BookBehaviour : InteractableObject
     public void Initialize()
     {
         anim = GetComponent<Animator>();
-        gameBoard.SetActive(false);
+        if (gameBoard)
+        {
+            gameBoard.SetActive(false);
+        }
     }
 
     public override void Interact()
@@ -54,7 +57,7 @@ public class BookBehaviour : InteractableObject
     {
         if (gameBoard)
         {
-            gameBoard.SetActive(true);
+            gameBoard?.SetActive(true);
         }
     }
 
@@ -62,7 +65,7 @@ public class BookBehaviour : InteractableObject
     {
         if (gameBoard)
         {
-            gameBoard.SetActive(false);
+            gameBoard?.SetActive(false);
         }
     }
 
